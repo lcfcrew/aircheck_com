@@ -279,17 +279,6 @@ REST_FRAMEWORK = {
 }
 '''
 
-# Django Mobile
-
-INSTALLED_APPS += [
-    'django_mobile',
-]
-
-MIDDLEWARE_CLASSES += [
-    'django_mobile.middleware.MobileDetectionMiddleware',
-    'django_mobile.middleware.SetFlavourMiddleware',
-]
-
 # SlothAuth
 
 INSTALLED_APPS += [
