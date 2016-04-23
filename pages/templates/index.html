@@ -1,8 +1,115 @@
+<!DOCTYPE HTML>
 <html>
 <head>
-    <title>AirCheck Demo</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"
+          integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+    <script src="http://www.webglearth.com/v2/api.js"></script>
+    <script>
+      function initialize() {
+        var options = {atmosphere: true, center: [0, 0], zoom: 4};
+        var earth = new WE.map('earth_div', options);
+       var natural = WE.tileLayer('http://data.webglearth.com/natural-earth-color/{z}/{x}/{y}.jpg', {
+          tileSize: 256,
+          tms: true
+        });
+        natural.addTo(earth);
+
+
+        // Start a simple rotation animation
+        var before = null;
+        requestAnimationFrame(function animate(now) {
+            var c = earth.getPosition();
+            var elapsed = before? now - before: 0;
+            before = now;
+            earth.setCenter([c[0], c[1] + 0.1*(elapsed/30)]);
+            requestAnimationFrame(animate);
+        });
+      }
+
+    </script>
+    <style>
+        html,body,.container
+        {
+        height:100%;
+        background: black;
+        background: '../static/background.jpg';
+        color: white;
+
+        }
+        .container
+        {
+        display:table;
+        width: 100%;
+        -moz-box-sizing: border-box;
+        box-sizing: border-box;
+        }
+
+        .row
+        {
+        height: 100%;
+        display: table-row;
+        margin: 0px;
+        padding: 0px;
+        }
+        .col-md-3.no-float, .col-md-9.no-float {
+        float: none; /* thanks baxabbit */
+        }
+        .col-md-3
+        {
+        display: table-cell;
+        width: 25%;
+        text-align: top;
+        }
+        .col-md-9
+        {
+        display: table-cell;
+        width: 75%;
+                margin: 0px;
+        padding: 0px;
+        }
+
+        #earth_div {
+        height: 100%;
+        position: absolute; left:200px;
+                margin: 0px;
+        padding: 0px;
+        }
+
+    </style>
+    <!--<style>-->
+    <!--html, body{padding: 0; margin: 0;}-->
+    <!--#earth_div{top: 0; right: 0; bottom: 0; left: 0;-->
+    <!--background-color: #000; position: absolute !important;}-->
+    <!--</style>-->
+    <title>WebGL Earth API: Satellite</title>
 </head>
-<body>
-    <h1>Welcome to the AirCheck challenge demo page.</h1>
+
+<body onload="initialize()">
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-3 no-float">
+            <div><h1>AirCast</h1>  
+</div>
+
+        </div>
+        <div class="col-md-9 col-md-offset-6 no-float">
+
+            <div id="earth_div"></div>
+        </div>
+    </div>
+</div>
+
+<!-- Bootstrap core JavaScript
+================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery.min.js"><\/script>')</script>
+<script src="../../dist/js/bootstrap.min.js"></script>
+<!-- Just to make our placeholder images work. Don't actually copy the next line! -->
+<script src="../../assets/js/vendor/holder.min.js"></script>
+<!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+<script src="../../assets/js/ie10-viewport-bug-workaround.js"></script>
 </body>
+
 </html>

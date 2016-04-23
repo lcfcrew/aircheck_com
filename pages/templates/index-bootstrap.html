@@ -29,6 +29,33 @@
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
 
+    <script src="http://www.webglearth.com/v2/api.js"></script>
+    <script>
+      function initialize() {
+        var options = {atmosphere: true, center: [0, 0], zoom: 4};
+        var earth = new WE.map('earth_div', options);
+       var natural = WE.tileLayer('http://data.webglearth.com/natural-earth-color/{z}/{x}/{y}.jpg', {
+          tileSize: 256,
+          tms: true
+        });
+        natural.addTo(earth);
+
+
+        // Start a simple rotation animation
+        var before = null;
+        requestAnimationFrame(function animate(now) {
+            var c = earth.getPosition();
+            var elapsed = before? now - before: 0;
+            before = now;
+            earth.setCenter([c[0], c[1] + 0.1*(elapsed/30)]);
+            requestAnimationFrame(animate);
+        });
+      }
+
+    </script>
+
+
+
 </head>
 
 <body id="page-top" data-spy="scroll" data-target=".navbar-fixed-top">
@@ -72,14 +99,16 @@
     <header class="intro">
         <div class="intro-body">
             <div class="container">
+
                 <div class="row">
-                    <div class="col-md-8 col-md-offset-2">
+
+                    <div class="col-md-8 col-md-offset-2" id="earth_div">
                         <h1 class="brand-heading">Grayscale</h1>
                         <p class="intro-text">A free, responsive, one page Bootstrap theme.<br>Created by Start Bootstrap.</p>
                         <a href="#about" class="btn btn-circle page-scroll">
                             <i class="fa fa-angle-double-down animated"></i>
                         </a>
-                    </div>
+                    </>
                 </div>
             </div>
         </div>
