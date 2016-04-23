@@ -1,10 +1,13 @@
+
+
 var earth;
 
 function initialize() {
     var options = {
         atmosphere: true,
         center: [0, 0],
-        zoom: 4
+        zoom: 4,
+        zooming: false,
     };
     earth = new WE.map('earth_div', options);
     var natural = WE.tileLayer('/static/img/webgl/{z}/{x}/{y}.jpg', {
@@ -42,4 +45,17 @@ function addNasaMarker( title,  message,  lat,  long)
 
 function nasaMarkerDiv( title, message) {
     return "<div class='nasa-marker'><b>" + title + "</b><br>" + message + "<br /></div>";
+}
+
+function submitLocation()
+{
+    var location = document.getElementById('input_location').value;
+    var value = getLatLongFromString(location);
+    alert(value);
+}
+
+function submitTweet()
+{
+ var message = document.getElementById('input_message').value;
+    alert(message);
 }

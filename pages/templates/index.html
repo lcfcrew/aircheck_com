@@ -7,6 +7,8 @@
           href="/static/css/nasa.css">
     <script src="/static/js/v2/api.js"></script>
     <script src="/static/js/nasa.js"></script>
+    <script src="/static/js/endpoints.js"></script>
+
     <!--<style>-->
     <!--html, body{padding: 0; margin: 0;}-->
     <!--#earth_div{top: 0; right: 0; bottom: 0; left: 0;-->
@@ -22,21 +24,31 @@
         <div class="col-md-3 no-float text-center">
             <div class="ns-block text-center"><h1>S C I N T I L L A</h1></div>
             <div class="input-group input-group-lg ns-block">
-                <span class="input-group-addon" id="sizing-addon1"><i class="fa fa-globe"
-                                                                      aria-hidden="true"></i></span>
-                <input type="text" class="form-control" placeholder="Location"
-                       aria-describedby="sizing-addon1"></div>
-            <!--
+                <input onsubmit="submitTweet" type="text" id='input_message' class="form-control"
+                       placeholder="How are you breathing?"
+                       aria-describedby="sizing-addon1">
+                <span class="input-group-addon btn btn-default" id="sizing-addon1"
+                      onclick="submitTweet()">
+                    <i class="fa fa-twitter" aria-hidden="true"></i>
+                </span>
+            </div>
 
-                        <div class="input-group input-group-lg ns-block">
-                            <span class="input-group-addon" >@</span>
-                            <input type="text" class="form-control" placeholder="Location"
-                                   aria-describedby="sizing-addon1"></div>
-            -->
+            <div class="input-group input-group-lg ns-block">
+                <input onsubmit="submitTweet" type="text" id='input_location' class="form-control"
+                       placeholder="Check Other Locations"
+                       aria-describedby="sizing-addon1">
+                <span class="input-group-addon btn btn-default" id="sizing-addon2"
+                      onclick="submitLocation()">
+                    <i class="fa fa-globe" aria-hidden="true"></i>
+                </span>
+            </div>
 
 
             <div class="btn-group-vertical btn-group-lg ns-block">
-                <button type="button" class="btn btn-primary" onclick="addNasaMarker('my title', 'my message', '34', '-118')">Air Quality Index</button>
+                <button type="button" class="btn btn-primary"
+                        onclick="addNasaMarker('my title', 'my message', '34', '-118')">Air Quality
+                    Index
+                </button>
                 <button type="button" class="btn btn-primary">Sulfur Dioxide Rating</button>
                 <button type="button" class="btn btn-primary">Some other overlay</button>
                 <button type="button" class="btn btn-primary">Some other overlay</button>
@@ -64,16 +76,10 @@
 <script>
     window.jQuery || document.write('<script src="../../assets/js/vendor/jquery.min.js"><\/script>')
 
-
-
-
-
 </script>
-<script src="../../dist/js/bootstrap.min.js"></script>
-<!-- Just to make our placeholder images work. Don't actually copy the next line! -->
-<script src="../../assets/js/vendor/holder.min.js"></script>
+<script src="/static/js/bootstrap.min.js"></script>
 <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-<script src="../../assets/js/ie10-viewport-bug-workaround.js"></script>
+<!--<script src="../../assets/js/ie10-viewport-bug-workaround.js"></script>-->
 <link rel="stylesheet"
       href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css">
 <link href='https://fonts.googleapis.com/css?family=Raleway:400,500' rel='stylesheet'
