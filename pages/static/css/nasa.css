@@ -1,0 +1,60 @@
+        html,body,.container
+        {
+        height:100%;
+        background: black;
+        background: '../static/background.jpg';
+        color: white;
+        font-family: 'Raleway', sans-serif;
+        }
+        .container
+        {
+        display:table;
+        width: 100%;
+        -moz-box-sizing: border-box;
+        box-sizing: border-box;
+        }
+
+        .row
+        {
+        height: 100%;
+        display: table-row;
+        margin: 0px;
+        padding: 0px;
+        }
+        .col-md-3.no-float, .col-md-9.no-float {
+        float: none; /* thanks baxabbit */
+        }
+        .col-md-3
+        {
+        display: table-cell;
+        width: 25%;
+        vertical-align: top;
+        padding-left: 5%;
+        padding-top: 10%
+
+        }
+
+        .col-md-9
+        {
+        display: table-cell;
+        width: 75%;
+                margin: 0px;
+        padding: 0px;
+        }
+
+        #earth_div {
+        height: 100%;
+        position: absolute; left:20%;
+                margin: 0px;
+        padding: 0px;
+        }
+
+        .ns-block {
+        margin: 10px;
+        text-align: center;
+        }
+
+        h1
+        {
+            text-size: 5em;
+        }

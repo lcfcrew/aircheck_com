@@ -2,10 +2,10 @@
 <html>
 <head>
     <link rel="stylesheet"
-          href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"
-          integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7"
-          crossorigin="anonymous">
-    <script src="http://www.webglearth.com/v2/api.js"></script>
+          href="/static/css/bootstrap.min.css">
+    <link rel="stylesheet"
+          href="/static/css/nasa.css">
+    <script src="/static/js/v2/api.js"></script>
     <script>
       function initialize() {
         var options = {atmosphere: true, center: [0, 0], zoom: 4};
@@ -15,6 +15,14 @@
           tms: true
         });
         natural.addTo(earth);
+
+        var marker = WE.marker([51.5, -0.09]).addTo(earth);
+        marker.bindPopup("<b>Hello world!</b><br>I am a popup.<br /><span style='font-size:10px;color:#999'>Tip: Another popup is hidden in Cairo..</span>", {maxWidth: 150, closeButton: true}).openPopup();
+
+        var marker2 = WE.marker([30.058056, 31.228889]).addTo(earth);
+        marker2.bindPopup("<b>Cairo</b><br>Yay, you found me!", {maxWidth: 120, closeButton: false});
+
+        var markerCustom = WE.marker([50, -9], '/img/logo-webglearth-white-100.png', 100, 24).addTo(earth);
 
 
         // Start a simple rotation animation
@@ -26,71 +34,16 @@
             earth.setCenter([c[0], c[1] + 0.1*(elapsed/30)]);
             requestAnimationFrame(animate);
         });
+
+
+
+
       }
 
 
+
+
     </script>
-    <style>
-        html,body,.container
-        {
-        height:100%;
-        background: black;
-        background: '../static/background.jpg';
-        color: white;
-
-        }
-        .container
-        {
-        display:table;
-        width: 100%;
-        -moz-box-sizing: border-box;
-        box-sizing: border-box;
-        }
-
-        .row
-        {
-        height: 100%;
-        display: table-row;
-        margin: 0px;
-        padding: 0px;
-        }
-        .col-md-3.no-float, .col-md-9.no-float {
-        float: none; /* thanks baxabbit */
-        }
-        .col-md-3
-        {
-        display: table-cell;
-        width: 25%;
-        vertical-align: top;
-        padding-left: 5%;
-        padding-top: 10%
-
-        }
-
-        .col-md-9
-        {
-        display: table-cell;
-        width: 75%;
-                margin: 0px;
-        padding: 0px;
-        }
-
-        #earth_div {
-        height: 100%;
-        position: absolute; left:20%;
-                margin: 0px;
-        padding: 0px;
-        }
-
-        .ns-block {
-        margin: 10px;
-        text-align: center;
-        }
-
-
-
-
-    </style>
     <!--<style>-->
     <!--html, body{padding: 0; margin: 0;}-->
     <!--#earth_div{top: 0; right: 0; bottom: 0; left: 0;-->
@@ -103,26 +56,41 @@
 
 <div class="container">
     <div class="row">
-        <div class="col-md-3 no-float">
-            <div class="ns-block"><h1>AirCast</h1></div>
-                <div class="input-group input-group-lg ns-block">
-                    <span class="input-group-addon" id="sizing-addon1">@</span>
-                    <input type="text" class="form-control" placeholder="Username"
-                           aria-describedby="sizing-addon1">
-                </div>
-                <div class="btn-group-vertical btn-group-lg ns-block">
-                    <button type="button" class="btn btn-primary">Air Quality Index</button>
-                    <button type="button" class="btn btn-primary">Sulfur Dioxide Rating</button>
-                    <button type="button" class="btn btn-primary">Some other overlay</button>
-                                        <button type="button" class="btn btn-primary">Some other overlay</button>
+        <div class="col-md-3 no-float text-center">
+            <div class="ns-block text-center"><h1>Scintilla</h1></div>
+            <div class="input-group input-group-lg ns-block">
+                <span class="input-group-addon" id="sizing-addon1"><i class="fa fa-globe" aria-hidden="true"></i></span>
+                <input type="text" class="form-control" placeholder="Location"
+                       aria-describedby="sizing-addon1"></div>
+<!--
 
-                </div>
+            <div class="input-group input-group-lg ns-block">
+                <span class="input-group-addon" >@</span>
+                <input type="text" class="form-control" placeholder="Location"
+                       aria-describedby="sizing-addon1"></div>
+-->
+
+
+            <div class="btn-group-vertical btn-group-lg ns-block">
+                <button type="button" class="btn btn-primary">Air Quality Index</button>
+                <button type="button" class="btn btn-primary">Sulfur Dioxide Rating</button>
+                <button type="button" class="btn btn-primary">Some other overlay</button>
+                <button type="button" class="btn btn-primary">Some other overlay</button>
+            </div>
         </div>
         <div class="col-md-9 col-md-offset-6 no-float">
-
             <div id="earth_div"></div>
         </div>
     </div>
+    <!--
+
+        <div class="row">
+
+            <div class="col-md-3">This is a second page</div>
+            <div class="col-md-9">THis is a thuird column</div>
+            </div>
+    -->
+
 </div>
 
 <!-- Bootstrap core JavaScript
@@ -131,12 +99,15 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 <script>
     window.jQuery || document.write('<script src="../../assets/js/vendor/jquery.min.js"><\/script>')
+
+
 </script>
 <script src="../../dist/js/bootstrap.min.js"></script>
 <!-- Just to make our placeholder images work. Don't actually copy the next line! -->
 <script src="../../assets/js/vendor/holder.min.js"></script>
 <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
 <script src="../../assets/js/ie10-viewport-bug-workaround.js"></script>
-</body>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css">
 
+</body>
 </html>
