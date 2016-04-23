@@ -168,6 +168,11 @@ if STAGING or PRODUCTION:
 else:
     STATIC_ROOT = os.path.join(PROJECT_ROOT, "static_collected")
 
+STATICFILES_FINDERS = [
+    'django.contrib.staticfiles.finders.FileSystemFinder',
+    'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+]
+
 MEDIA_URL = '/media/'
 
 MEDIA_ROOT = os.path.join(PROJECT_ROOT, 'media')
