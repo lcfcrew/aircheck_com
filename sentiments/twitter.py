@@ -1,11 +1,20 @@
+import os
 import tweepy
+
+
+_CONSUMER_TOKEN = os.environ.get('TWITTER_API_CONSUMER_TOKEN', '')
+_CONSUMER_SECRET = os.environ.get('TWITTER_API_CONSUMER_SECRET', '')
+_ACCESS_TOKEN = os.environ.get('TWITTER_API_ACCESS_TOKEN', '')
+_ACCESS_SECRET = os.environ.get('TWITTER_API_ACCESS_SECRET', '')
 
 
 class TwitterAPI(object):
     def __init__(self,
                  query,
-                 consumer_token, consumer_secret,
-                 access_token, access_secret):
+                 consumer_token=_CONSUMER_TOKEN,
+                 consumer_secret=_CONSUMER_SECRET,
+                 access_token=_ACCESS_TOKEN,
+                 access_secret=_ACCESS_SECRET):
         auth = tweepy.OAuthHandler(consumer_token, consumer_secret)
         auth.set_access_token(access_token, access_secret)
         self.query = query
