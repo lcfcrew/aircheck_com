@@ -4,6 +4,7 @@ from django.http import JsonResponse
 from rest_framework.parsers import JSONParser
 
 from . import models
+from . import twitter
 
 
 @csrf_exempt
@@ -22,7 +23,8 @@ def sentiment_collection(request):
 
     elif request.method is 'UPDATE':
         # Call Twitter
-        pass
+        twitter_api = twitter.TwitterAPI(
+            consumer_token, consumer_secret, access_token, access_secret)
 
     elif request.method is 'GET':
         sentiments = models.Sentiment.objects.all()
