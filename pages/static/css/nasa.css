@@ -56,5 +56,10 @@
 
         h1
         {
-            text-size: 5em;
+            font-size: 3em;
+        }
+
+        .nasa-marker
+        {
+        color: #000;
         }

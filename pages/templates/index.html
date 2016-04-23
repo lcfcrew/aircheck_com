@@ -6,44 +6,7 @@
     <link rel="stylesheet"
           href="/static/css/nasa.css">
     <script src="/static/js/v2/api.js"></script>
-    <script>
-      function initialize() {
-        var options = {atmosphere: true, center: [0, 0], zoom: 4};
-        var earth = new WE.map('earth_div', options);
-       var natural = WE.tileLayer('http://data.webglearth.com/natural-earth-color/{z}/{x}/{y}.jpg', {
-          tileSize: 256,
-          tms: true
-        });
-        natural.addTo(earth);
-
-        var marker = WE.marker([51.5, -0.09]).addTo(earth);
-        marker.bindPopup("<b>Hello world!</b><br>I am a popup.<br /><span style='font-size:10px;color:#999'>Tip: Another popup is hidden in Cairo..</span>", {maxWidth: 150, closeButton: true}).openPopup();
-
-        var marker2 = WE.marker([30.058056, 31.228889]).addTo(earth);
-        marker2.bindPopup("<b>Cairo</b><br>Yay, you found me!", {maxWidth: 120, closeButton: false});
-
-        var markerCustom = WE.marker([50, -9], '/img/logo-webglearth-white-100.png', 100, 24).addTo(earth);
-
-
-        // Start a simple rotation animation
-        var before = null;
-        requestAnimationFrame(function animate(now) {
-            var c = earth.getPosition();
-            var elapsed = before? now - before: 0;
-            before = now;
-            earth.setCenter([c[0], c[1] + 0.1*(elapsed/30)]);
-            requestAnimationFrame(animate);
-        });
-
-
-
-
-      }
-
-
-
-
-    </script>
+    <script src="/static/js/nasa.js"></script>
     <!--<style>-->
     <!--html, body{padding: 0; margin: 0;}-->
     <!--#earth_div{top: 0; right: 0; bottom: 0; left: 0;-->
@@ -57,22 +20,23 @@
 <div class="container">
     <div class="row">
         <div class="col-md-3 no-float text-center">
-            <div class="ns-block text-center"><h1>Scintilla</h1></div>
+            <div class="ns-block text-center"><h1>S C I N T I L L A</h1></div>
             <div class="input-group input-group-lg ns-block">
-                <span class="input-group-addon" id="sizing-addon1"><i class="fa fa-globe" aria-hidden="true"></i></span>
+                <span class="input-group-addon" id="sizing-addon1"><i class="fa fa-globe"
+                                                                      aria-hidden="true"></i></span>
                 <input type="text" class="form-control" placeholder="Location"
                        aria-describedby="sizing-addon1"></div>
-<!--
+            <!--
 
-            <div class="input-group input-group-lg ns-block">
-                <span class="input-group-addon" >@</span>
-                <input type="text" class="form-control" placeholder="Location"
-                       aria-describedby="sizing-addon1"></div>
--->
+                        <div class="input-group input-group-lg ns-block">
+                            <span class="input-group-addon" >@</span>
+                            <input type="text" class="form-control" placeholder="Location"
+                                   aria-describedby="sizing-addon1"></div>
+            -->
 
 
             <div class="btn-group-vertical btn-group-lg ns-block">
-                <button type="button" class="btn btn-primary">Air Quality Index</button>
+                <button type="button" class="btn btn-primary" onclick="addMarker()">Air Quality Index</button>
                 <button type="button" class="btn btn-primary">Sulfur Dioxide Rating</button>
                 <button type="button" class="btn btn-primary">Some other overlay</button>
                 <button type="button" class="btn btn-primary">Some other overlay</button>
@@ -101,13 +65,18 @@
     window.jQuery || document.write('<script src="../../assets/js/vendor/jquery.min.js"><\/script>')
 
 
+
+
+
 </script>
 <script src="../../dist/js/bootstrap.min.js"></script>
 <!-- Just to make our placeholder images work. Don't actually copy the next line! -->
 <script src="../../assets/js/vendor/holder.min.js"></script>
 <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
 <script src="../../assets/js/ie10-viewport-bug-workaround.js"></script>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css">
-
+<link rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css">
+<link href='https://fonts.googleapis.com/css?family=Raleway:400,500' rel='stylesheet'
+      type='text/css'>
 </body>
 </html>
