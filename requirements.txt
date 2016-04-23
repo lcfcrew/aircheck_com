@@ -3,6 +3,8 @@
 Django==1.9.5
 djangorestframework==3.3.2
 slothauth==0.3
+h5py==2.6.0
+python-hdf4==0.9
 
 # Logging
 

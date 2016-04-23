@@ -150,6 +150,7 @@ INSTALLED_APPS += (
     'django.contrib.sitemaps',
     # custom apps
     'accounts',
+    'nasa',
     'pages',
     'sensors',
 )
