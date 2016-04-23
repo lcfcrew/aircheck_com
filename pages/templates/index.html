@@ -1,8 +1,10 @@
 <!DOCTYPE HTML>
 <html>
 <head>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"
-          integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+    <link rel="stylesheet"
+          href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"
+          integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7"
+          crossorigin="anonymous">
     <script src="http://www.webglearth.com/v2/api.js"></script>
     <script>
       function initialize() {
@@ -25,6 +27,7 @@
             requestAnimationFrame(animate);
         });
       }
+
 
     </script>
     <style>
@@ -58,8 +61,12 @@
         {
         display: table-cell;
         width: 25%;
-        text-align: top;
+        vertical-align: top;
+        padding-left: 5%;
+        padding-top: 10%
+
         }
+
         .col-md-9
         {
         display: table-cell;
@@ -70,10 +77,18 @@
 
         #earth_div {
         height: 100%;
-        position: absolute; left:200px;
+        position: absolute; left:20%;
                 margin: 0px;
         padding: 0px;
         }
+
+        .ns-block {
+        margin: 10px;
+        text-align: center;
+        }
+
+
+
 
     </style>
     <!--<style>-->
@@ -89,9 +104,19 @@
 <div class="container">
     <div class="row">
         <div class="col-md-3 no-float">
-            <div><h1>AirCast</h1>  
-</div>
+            <div class="ns-block"><h1>AirCast</h1></div>
+                <div class="input-group input-group-lg ns-block">
+                    <span class="input-group-addon" id="sizing-addon1">@</span>
+                    <input type="text" class="form-control" placeholder="Username"
+                           aria-describedby="sizing-addon1">
+                </div>
+                <div class="btn-group-vertical btn-group-lg ns-block">
+                    <button type="button" class="btn btn-primary">Air Quality Index</button>
+                    <button type="button" class="btn btn-primary">Sulfur Dioxide Rating</button>
+                    <button type="button" class="btn btn-primary">Some other overlay</button>
+                                        <button type="button" class="btn btn-primary">Some other overlay</button>
 
+                </div>
         </div>
         <div class="col-md-9 col-md-offset-6 no-float">
 
@@ -104,7 +129,9 @@
 ================================================== -->
 <!-- Placed at the end of the document so the pages load faster -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-<script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery.min.js"><\/script>')</script>
+<script>
+    window.jQuery || document.write('<script src="../../assets/js/vendor/jquery.min.js"><\/script>')
+</script>
 <script src="../../dist/js/bootstrap.min.js"></script>
 <!-- Just to make our placeholder images work. Don't actually copy the next line! -->
 <script src="../../assets/js/vendor/holder.min.js"></script>
