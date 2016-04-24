@@ -65,7 +65,10 @@ class KeyPhrase(models.Model):
     A list of key phrases associated with a registered Sentiment.
     """
     sentiment = models.ForeignKey(Sentiment, on_delete=models.CASCADE)
+    phrase = models.CharField(max_length=128)
 
 
 class KeyPhraseSerializer(serializers.Serializer):
-    sentiment = serializers.ListField()
+    sentiment = serializers.PrimaryKeyRelatedField(
+        queryset=Sentiment.objects.all())
+    phrase = serializers.CharField()

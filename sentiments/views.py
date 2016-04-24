@@ -90,6 +90,7 @@ def new_tweets(request):
     azure_api = azure.AzureAPI()
 
     if request.method == 'GET':
+        print('get request\n\n')
         max_items = request.GET.get('max_items') or _DEFAULT_MAX_ITEMS
 
         try:
@@ -103,23 +104,29 @@ def new_tweets(request):
             'documents': [{'id': t['tweet_id'], 'text': t['text']} for t in tweets]
         }
 
-        # Sentiment analysis
+        # Analyze
         sentiments = azure_api.sentiment(azure_data)
-        print(sentiments)
-        for idx, tweet in enumerate(sentiments['documents']):
-            tweets[idx]['sentiment'] = tweet['score']
-
-        # Key phrases
-        # key_phrases = azure_api.key_phrases(azure_data)
-        # for idx, tweet in enumerate(key_phrases['documents']):
-        #     tweets[idx]['key_phrases'] = tweet['keyPhrases']
+        key_phrases = azure_api.key_phrases(azure_data)
 
         # Serialize
         serializer = models.SentimentSerializer()
-        for tweet_data in tweets:
+
+        for idx, tweet_data in enumerate(tweets):
+            sentiment_score = sentiments['documents'][idx]['score']
+            key_phrase_list = key_phrases['documents'][idx]['keyPhrases']
+
             tweet = serializer.create(tweet_data)
             tweet.is_tweet = True
+            tweet.sentiment = sentiment_score
             tweet.save()
+
+            for phrase in key_phrase_list:
+                phrase_obj = models.KeyPhrase.objects.create(
+                    sentiment=tweet, phrase=phrase)
+                phrase_obj.save()
+
+            tweets[idx]['sentiment'] = sentiment_score
+            tweets[idx]['key_phrases'] = key_phrase_list
 
         return JSONResponse(tweets)
 
