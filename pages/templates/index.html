@@ -8,6 +8,8 @@
     <script src="/static/js/v2/api.js"></script>
     <script src="/static/js/frontend.js"></script>
     <script src="/static/js/rest.js"></script>
+        <script src="/static/js/twitter_api.js"></script>
+
     <!--<script src="/static/js/gibs/GIBSMetadata.js"></script>-->
     <!--<script src="/static/js/gibs/GIBSLayer.js"></script>-->
 
@@ -35,7 +37,7 @@
                        placeholder="How are you breathing?"
                        aria-describedby="sizing-addon1">
                 <span class="input-group-addon btn btn-default" id="sizing-addon1"
-                      onclick="submitTweetCallback()" href="#aqi_div" data-toggle="collapse">
+                      onclick="postSentiment(submitTweetCallback)" href="#aqi_div" data-toggle="collapse">
                     <i class="fa fa-twitter" aria-hidden="true"></i>
                 </span>
             </div>
@@ -55,11 +57,17 @@
                        placeholder="Check Other Locations"
                        aria-describedby="sizing-addon1">
                 <span class="input-group-addon btn btn-default" id="sizing-addon2"
-                      onclick="submitLocation()">
+                      onclick="submitLocation()" href="#aqi_other_div" data-toggle="collapse">
                     <i class="fa fa-globe" aria-hidden="true"></i>
                 </span>
             </div>
 
+
+            <div id="aqi_other_div" class="ns-block collapse panel panel-default">
+                <div class="panel-body">
+                   <h3 id='aqi_other_div_text' class="panel-title"> Panel content</h3>
+                </div>
+            </div>
 
             <div class="btn-group-vertical btn-group-lg ns-block">
                 <button type="button" class="btn btn-primary"

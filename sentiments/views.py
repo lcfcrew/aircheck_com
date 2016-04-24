@@ -1,4 +1,5 @@
 import datetime
+from geoip import geolite2
 
 from django.views.decorators.csrf import csrf_exempt
 from django.http import HttpResponse
@@ -70,6 +71,10 @@ def sentiments_endpoint(request):
         data['ip_address'] = get_ip(request)
         data['created'] = data.get('created') or datetime.datetime.now()
         data['twitter_user'] = 'Scintilla'
+        location_match = geolite2.lookup(data['ip_address'])
+        if location_match:
+            print(location_match.location)
+            data['latitude'], data['longitude'] = location_match.location
         serializer = models.SentimentSerializer(data=data)
         if serializer.is_valid():
             serializer.save()

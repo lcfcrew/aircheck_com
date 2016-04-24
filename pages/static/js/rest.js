@@ -30,22 +30,22 @@ function getLatLongFromGeoIP() {
     return [33.000, -118.000];
 }
 
-function getLatLongFromString(query, addMarker) // var is a string like "Los Angeles", gets a location back
+function getLatLongFromString(query, addMarker, UpdateLatLong) // var is a string like "Los Angeles", gets a location back
 {
     var geocodeRequest = "http://dev.virtualearth.net/REST/v1/Locations?query=" + encodeURIComponent(query) + "&key=" + bingMapsKey;
     CallRestService(geocodeRequest, UpdateLatLong);
     var topResult;
-    function UpdateLatLong(data)
-    {
-        topResult = data.resourceSets[0].resources[0];
-        addMarker(topResult.name, "", topResult.point.coordinates[0], topResult.point.coordinates[1]);
-    }
+
 }
 
-// CHRIS VIA DJANGO BACKEND
-function getAirAnalysis(lat, long) {
-    return "somedata";
-}
+
+
+//// CHRIS VIA DJANGO BACKEND
+//function getAirAnalysis(query) {
+//
+// getLatLongFromString(query, addMarker)
+////    return "somedata";
+//}
 
 function CallRestService(request, callback) {
     $.ajax({

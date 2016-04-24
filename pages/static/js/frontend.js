@@ -138,44 +138,58 @@ function nasaMarkerDiv( title, message) {
 function submitLocation()
 {
     var location = document.getElementById('input_location').value;
-    getLatLongFromString(location, addNasaMarker);
+    getLatLongFromString(location, addNasaMarker, UpdateLatLong);
 }
+
+function UpdateLatLong(data)
+{
+        topResult = data.resourceSets[0].resources[0];
+        addNasaMarker(topResult.name, "", topResult.point.coordinates[0], topResult.point.coordinates[1]);
+
+        var latitude = topResult.point.coordinates[0];
+        var longitude = topResult.point.coordinates[1];
+        var locationName = topResult.name;
+       $.ajax({
+           type: "GET",
+           url: '/api/v1/discretized_data_points/aqi/?latitude=' + String(latitude) + '&longitude=' + String(longitude),
+           data: {},
+           dataType: 'json'
+       }).done(function(data) {
+           style = calcColorFromScore(data['aqi']);
+    $('#aqi_other_div').css({'color': '#000', 'background-color': style[1], 'position': 'relative'}); //The specific CSS changes after the first one, are, of course, just examples.
+    $('#aqi_other_div_text').text(locationName + " is " + style[0] + " today. (AQI = " + data['aqi'] + ')');
+
+       })
+}
+
 function toggler(divId) {
     $("#" + divId).toggle();
 }
 
-function submitTweet()
+function submitTweetCallback(data, status)
 {
- var message = document.getElementById('input_message').value;
-
-//// Convert data to JSON string
-//   data = JSON.stringify(message);
-//
-//   // Submit PUT request
-//   $.ajax({
-//       url: 'http://127.0.0.1:8000/api/v1/sentiments/',
-//       type: 'PUT',
-//       dataType: 'json',
-//       data: data
-//   })
-//       .complete(function (data, status) {
-//           data.responseText = JSON.parse(data.responseText);
-//           complete(data, status)
-//       })
-}
-
-function submitTweetCallback()
-{
- var message = document.getElementById('input_message').value;
-
- var data = { 'text': "TestMessage", 'sentiment' : .5, 'lat' : 34, 'long' : -118 };
+//alert("callback" + data.responseText['text']);
+// var data = { 'text': "TestMessage", 'sentiment' : .5, 'lat' : 34, 'long' : -118 };
  var locationName = "Pasadena, CA";
-    addNasaMarker(locationName, message, data['lat'], data['long']);
+    addNasaMarker(locationName, data.responseText['text'], 34, -118);
 
     style = calcColorFromScore(4);
     $('#aqi_div').css({'color': '#000', 'background-color': style[1], 'position': 'relative'}); //The specific CSS changes after the first one, are, of course, just examples.
     $('#aqi_div_text').text(locationName + " is " + style[0] + " today");
 }
+
+function get_aqi(data) {
+    console.log(data);
+   /*$.ajax({
+       type: "GET",
+       url: '/api/v1/discretized_data_points/aqi/?latitude=' + String(latitude) + '&longitude=' + String(longitude),
+       data: {},
+       dataType: 'json'
+   }).done(function(data) {
+       console.log(data['aqi']);
+   })*/
+}
+
 
 function calcColorFromScore(aqi)
 {

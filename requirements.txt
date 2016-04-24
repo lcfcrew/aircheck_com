@@ -31,3 +31,8 @@ Werkzeug==0.11.4
 
 tweepy
 geopy
+GeoIP
+python-geoip
+python-geoip-geolite2
+python-aqi
+pillow
