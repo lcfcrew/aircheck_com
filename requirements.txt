@@ -34,3 +34,5 @@ geopy
 GeoIP
 python-geoip
 python-geoip-geolite2
+python-aqi
+pillow
