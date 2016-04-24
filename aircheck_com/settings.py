@@ -30,7 +30,7 @@ TESTING = bool(os.environ.get('TESTING', False))
 
 # Custom Global App Config
 PROJECT_NAME = 'aircheck'
-PROJECT_DOMAIN = 'aircheck.com'
+PROJECT_DOMAIN = 'airchecknasa.com'
 
 APP_ENV = os.environ.get('APP_ENV', '').upper()
 
