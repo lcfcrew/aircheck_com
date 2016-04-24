@@ -15,19 +15,23 @@ Including another URLconf
 """
 from django.conf import settings
 from django.conf.urls import include, url
+from django.conf.urls.static import static
 from django.contrib import admin
 
 import slothauth.urls as slothauth_urls
 import pages.urls as pages_urls
 import sensors.urls as sensors_urls
 import accounts.urls as accounts_urls
+import nasa.urls as nasa_urls
 import sentiments.urls as sentiments_urls
+
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^', include(pages_urls)),
     url(r'^', include(sensors_urls)),
     url(r'^', include(accounts_urls)),
+    url(r'^', include(nasa_urls)),
     url(r'^', include(slothauth_urls)),
     url(r'^', include(sentiments_urls)),
 ]
@@ -35,3 +39,5 @@ urlpatterns = [
 urlpatterns += [
     url(r'^media/(?P<path>.*)$', 'django.views.static.serve', {'document_root': settings.MEDIA_ROOT, 'show_indexes': True}),
 ]
+
+urlpatterns = urlpatterns + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

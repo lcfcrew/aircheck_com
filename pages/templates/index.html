@@ -6,8 +6,10 @@
     <link rel="stylesheet"
           href="/static/css/nasa.css">
     <script src="/static/js/v2/api.js"></script>
-    <script src="/static/js/nasa.js"></script>
-    <script src="/static/js/endpoints.js"></script>
+    <script src="/static/js/frontend.js"></script>
+    <script src="/static/js/rest.js"></script>
+    <!--<script src="/static/js/gibs/GIBSMetadata.js"></script>-->
+    <!--<script src="/static/js/gibs/GIBSLayer.js"></script>-->
 
     <!--<style>-->
     <!--html, body{padding: 0; margin: 0;}-->
@@ -34,7 +36,7 @@
             </div>
 
             <div class="input-group input-group-lg ns-block">
-                <input onsubmit="submitTweet" type="text" id='input_location' class="form-control"
+                <input onclick="addNasaMarker('my title', 'my message', '34', '-118')" type="text" id='input_location' class="form-control"
                        placeholder="Check Other Locations"
                        aria-describedby="sizing-addon1">
                 <span class="input-group-addon btn btn-default" id="sizing-addon2"
@@ -46,14 +48,22 @@
 
             <div class="btn-group-vertical btn-group-lg ns-block">
                 <button type="button" class="btn btn-primary"
-                        onclick="addNasaMarker('my title', 'my message', '34', '-118')">Air Quality
-                    Index
+                        onclick="mapOzone()">Ozone
                 </button>
-                <button type="button" class="btn btn-primary">Sulfur Dioxide Rating</button>
-                <button type="button" class="btn btn-primary">Some other overlay</button>
-                <button type="button" class="btn btn-primary">Some other overlay</button>
+                <button type="button" class="btn btn-primary"
+                        onclick="mapCarbonMonoxide()">Carbon Monoxide</button>
+                <button type="button" class="btn btn-primary"
+                        onclick="mapSulfurDioxide()">Sulfur Dioxide</button>
+                <button type="button" class="btn btn-primary"
+                        onclick="mapDustScore()">Dust</button>
             </div>
+
+            <a class="twitter-timeline" href="https://twitter.com/airchecknasa" data-widget-id="724266085130723328">Tweets by @airchecknasa</a>
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
         </div>
+
+
+
         <div class="col-md-9 col-md-offset-6 no-float">
             <div id="earth_div"></div>
         </div>
