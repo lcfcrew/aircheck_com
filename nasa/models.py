@@ -19,3 +19,15 @@ class NasaDataFile(DateMixin):
 
     def __unicode__(self):
         return str(self.collection_short_name)
+
+
+class DiscretizedDataPoint(DateMixin):
+
+    type = models.CharField(max_length=300, null=True, blank=True)
+    value = models.DecimalField(max_digits=8, decimal_places=3, null=True, blank=True)
+    latitude = models.DecimalField(max_digits=4, decimal_places=1, null=True, blank=True)
+    longitude = models.DecimalField(max_digits=4, decimal_places=1, null=True, blank=True)
+    date = models.DateTimeField(null=True, blank=True)
+
+    def __unicode__(self):
+        return str(self.type)

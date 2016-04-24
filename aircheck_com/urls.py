@@ -22,12 +22,14 @@ import slothauth.urls as slothauth_urls
 import pages.urls as pages_urls
 import sensors.urls as sensors_urls
 import accounts.urls as accounts_urls
+import nasa.urls as nasa_urls
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^', include(pages_urls)),
     url(r'^', include(sensors_urls)),
     url(r'^', include(accounts_urls)),
+    url(r'^', include(nasa_urls)),
     url(r'^', include(slothauth_urls)),
 ]
 

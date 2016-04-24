@@ -9,13 +9,14 @@ from django.core.files.base import File
 from .models import NasaDataFile
 
 
-host = 'ftp://discnrt1.gesdisc.eosdis.nasa.gov/data/Aura_NRT/ML2CO_NRT.003/'
-host = 'discnrt1.gesdisc.eosdis.nasa.gov'
+#host = 'discnrt1.gesdisc.eosdis.nasa.gov'
+host = 'omisips1.omisips.eosdis.nasa.gov'
 
 ftp = FTP(host)     # connect to host, default port
 ftp.login('cdelguercio', 'FAkbymFopsE5')                     # user anonymous, passwd anonymous@
 
-ftp.cwd('data/Aura_NRT/ML2CO_NRT.003/Recent/')               # change into "debian" directory
+#ftp.cwd('data/Aura_NRT/ML2CO_NRT.003/Recent/')               # change into "Recent" directory
+ftp.cwd('OMSO2NRTb/')
 
 filenames = ftp.nlst()
 
