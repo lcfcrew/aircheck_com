@@ -69,6 +69,7 @@ def sentiments_endpoint(request):
         data = JSONParser().parse(request)
         data['ip_address'] = get_ip(request)
         data['created'] = data.get('created') or datetime.datetime.now()
+        data['twitter_user'] = 'Scintilla'
         serializer = models.SentimentSerializer(data=data)
         if serializer.is_valid():
             serializer.save()
