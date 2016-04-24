@@ -1,11 +1,30 @@
 import os
 import tweepy
+from geopy import geocoders
 
 
 _CONSUMER_TOKEN = os.environ.get('TWITTER_API_CONSUMER_TOKEN', '')
 _CONSUMER_SECRET = os.environ.get('TWITTER_API_CONSUMER_SECRET', '')
 _ACCESS_TOKEN = os.environ.get('TWITTER_API_ACCESS_TOKEN', '')
 _ACCESS_SECRET = os.environ.get('TWITTER_API_ACCESS_SECRET', '')
+_BING_API_KEY = os.environ.get('BING_API_KEY', '')
+
+
+def _get_lat_long(tweet):
+    geolocator = geocoders.Bing(_BING_API_KEY)
+    location = None
+    if tweet.coordinates:
+        return tweet.coordinates
+    elif tweet.place:
+        print('Tweet place: %s' % tweet.place)
+        location = geolocator.geocode(tweet.place.full_name)
+    elif tweet.user.location:
+        print('User location: %s' % tweet.user.location)
+        location = geolocator.geocode(tweet.user.location)
+    if location:
+        return location.latitude, location.longitude
+    else:
+        return None, None
 
 
 class TwitterAPI(object):
