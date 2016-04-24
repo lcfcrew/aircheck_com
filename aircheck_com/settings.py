@@ -94,12 +94,24 @@ WSGI_APPLICATION = 'aircheck_com.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/1.9/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+if not PRODUCTION:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        }
     }
-}
+else:
+    DATABASES = {
+        'default': {  # for South
+            'ENGINE': 'django.db.backends.mysql',
+            'NAME': 'aircheck-db',
+            'USER': 'cdelguercio',
+            'PASSWORD': 'FAkbymFopsE5',
+            'HOST': 'aircheck-db.database.windows.net',
+            'PORT': '1433',
+        }
+    }
 
 
 # Password validation
