@@ -17,9 +17,8 @@ height = 256
 width = 256
 
 
-def get_aqi(dust,so2,co):
+def get_aqi(so2,co):
     query = [(aqi.POLLUTANT_CO_8H,co),
-             (aqi.POLLUTANT_PM25,dust),
              (aqi.POLLUTANT_SO2_1H,so2)]
     return aqi.to_aqi(query)
 
