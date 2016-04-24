@@ -46,10 +46,16 @@ class DiscretizedDataPointViewSet(viewsets.ModelViewSet):
         latitude = request.GET.get('latitude')
         longitude = request.GET.get('longitude')
 
-        dp_co = DiscretizedDataPoint.objects.filter(type='CO', longitude__gte=longitude, latitude__gte=latitude)[0]
-        dp_so2 = DiscretizedDataPoint.objects.filter(type='SO2', longitude__gte=longitude, latitude__gte=latitude)[0]
-        dp_dust = DiscretizedDataPoint.objects.filter(type='Dust', longitude__gte=longitude, latitude__gte=latitude)[0]
+        try:
+            dp_co = DiscretizedDataPoint.objects.filter(type='CO', longitude__gte=longitude, latitude__gte=latitude)[0].value
+        except:
+            dp_co = 0
+        try:
+            dp_so2 = DiscretizedDataPoint.objects.filter(type='SO2', longitude__gte=longitude, latitude__gte=latitude)[0].value
+        except:
+            dp_so2 = 0
+        #dp_dust = DiscretizedDataPoint.objects.filter(type='Dust', longitude__gte=longitude, latitude__gte=latitude)[0]
 
-        response = { 'aqi': get_aqi(dp_dust.value, dp_so2.value, dp_co.value) }
+        response = { 'aqi': get_aqi(dp_so2, dp_co) }
 
         return Response(response)
