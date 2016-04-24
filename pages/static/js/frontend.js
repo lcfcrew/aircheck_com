@@ -164,13 +164,12 @@ function submitTweet()
 //       })
 }
 
-function submitTweetCallback()
+function submitTweetCallback(data, status)
 {
- var message = document.getElementById('input_message').value;
-
- var data = { 'text': "TestMessage", 'sentiment' : .5, 'lat' : 34, 'long' : -118 };
+//alert("callback" + data.responseText['text']);
+// var data = { 'text': "TestMessage", 'sentiment' : .5, 'lat' : 34, 'long' : -118 };
  var locationName = "Pasadena, CA";
-    addNasaMarker(locationName, message, data['lat'], data['long']);
+    addNasaMarker(locationName, data.responseText['text'], 34, -118);
 
     style = calcColorFromScore(4);
     $('#aqi_div').css({'color': '#000', 'background-color': style[1], 'position': 'relative'}); //The specific CSS changes after the first one, are, of course, just examples.

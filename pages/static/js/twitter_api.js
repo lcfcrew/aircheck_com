@@ -2,23 +2,24 @@
  * Created by kobnar on 4/24/16.
  */
 
-function postSentiment(text, complete) {
+function postSentiment(complete) {
+ var text = document.getElementById('input_message').value;
 
     // Convert data to JSON string
-    var data = {'text': JSON.stringify(text)};
+    var dataPost = JSON.stringify({'text': text});
+//    alert(dataPost);
 
     // Submit POST request
     $.ajax({
         url: '/api/v1/sentiments/',
         type: 'POST',
         dataType: 'json',
-        data: data
+        data: dataPost
     })
         .complete(function (data, status) {
             data.responseText = JSON.parse(data.responseText);
             complete(data, status)
         })
-    
 }
 
 function updateTweets(complete) {

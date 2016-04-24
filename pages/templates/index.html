@@ -8,6 +8,8 @@
     <script src="/static/js/v2/api.js"></script>
     <script src="/static/js/frontend.js"></script>
     <script src="/static/js/rest.js"></script>
+        <script src="/static/js/twitter_api.js"></script>
+
     <!--<script src="/static/js/gibs/GIBSMetadata.js"></script>-->
     <!--<script src="/static/js/gibs/GIBSLayer.js"></script>-->
 
@@ -35,7 +37,7 @@
                        placeholder="How are you breathing?"
                        aria-describedby="sizing-addon1">
                 <span class="input-group-addon btn btn-default" id="sizing-addon1"
-                      onclick="submitTweetCallback()" href="#aqi_div" data-toggle="collapse">
+                      onclick="postSentiment(submitTweetCallback)" href="#aqi_div" data-toggle="collapse">
                     <i class="fa fa-twitter" aria-hidden="true"></i>
                 </span>
             </div>

@@ -42,10 +42,12 @@ function getLatLongFromString(query, addMarker) // var is a string like "Los Ang
     }
 }
 
-// CHRIS VIA DJANGO BACKEND
-function getAirAnalysis(lat, long) {
-    return "somedata";
-}
+//// CHRIS VIA DJANGO BACKEND
+//function getAirAnalysis(query) {
+//
+// getLatLongFromString(query, addMarker)
+////    return "somedata";
+//}
 
 function CallRestService(request, callback) {
     $.ajax({
