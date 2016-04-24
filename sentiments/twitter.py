@@ -49,12 +49,17 @@ class TwitterAPI(object):
 
     @staticmethod
     def _serialize_tweet(tweet):
+        latitude, longitude = _get_lat_long(tweet)
         return {
-            'tweet_id': tweet.id_str,
             'created': tweet.created_at,
+            'text': tweet.text,
+            'tweet_id': tweet.id_str,
+            'twitter_user': tweet.user.screen_name,
+            'latitude': latitude,
+            'longitude': longitude,
+            'language': tweet.lang,
             # 'location': tweet.coordinates,
             # 'place': None,
-            'text': tweet.text,
             # 'user': {
             #     'id': tweet.user.id,
             #     'screen_name': tweet.user.screen_name,
