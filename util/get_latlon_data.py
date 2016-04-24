@@ -1,6 +1,6 @@
 import requests
 import numpy
-import IPython
+#import IPython
 from cStringIO import StringIO
 from PIL import Image
 import colorsys

@@ -23,10 +23,10 @@ class NasaDataFile(DateMixin):
 
 class DiscretizedDataPoint(DateMixin):
 
-    type = models.CharField(max_length=300, null=True, blank=True)
+    type = models.CharField(max_length=300, null=True, blank=True, db_index=True)
     value = models.DecimalField(max_digits=8, decimal_places=3, null=True, blank=True)
-    latitude = models.DecimalField(max_digits=4, decimal_places=1, null=True, blank=True)
-    longitude = models.DecimalField(max_digits=4, decimal_places=1, null=True, blank=True)
+    latitude = models.DecimalField(max_digits=15, decimal_places=10, null=True, blank=True, db_index=True)
+    longitude = models.DecimalField(max_digits=15, decimal_places=10, null=True, blank=True, db_index=True)
     date = models.DateTimeField(null=True, blank=True)
 
     def __unicode__(self):
