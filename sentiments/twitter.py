@@ -32,15 +32,15 @@ class TwitterAPI(object):
     @staticmethod
     def _serialize_tweet(tweet):
         return {
-            'id': tweet.id_str,
+            'tweet_id': tweet.id_str,
             'created': tweet.created_at,
-            'location': tweet.coordinates,
-            'place': None,
+            # 'location': tweet.coordinates,
+            # 'place': None,
             'text': tweet.text,
-            'user': {
-                'id': tweet.user.id,
-                'screen_name': tweet.user.screen_name,
-                'name': tweet.user.name,
-                'location': tweet.user.location,
-            },
+            # 'user': {
+            #     'id': tweet.user.id,
+            #     'screen_name': tweet.user.screen_name,
+            #     'name': tweet.user.name,
+            #     'location': tweet.user.location,
+            # },
         }
