@@ -50,8 +50,7 @@ function nasaMarkerDiv( title, message) {
 function submitLocation()
 {
     var location = document.getElementById('input_location').value;
-    var value = getLatLongFromString(location);
-    alert(value);
+    getLatLongFromString(location, addNasaMarker);
 }
 
 function submitTweet()
