@@ -90,7 +90,6 @@ def new_tweets(request):
     azure_api = azure.AzureAPI()
 
     if request.method == 'GET':
-        print('get request\n\n')
         max_items = request.GET.get('max_items') or _DEFAULT_MAX_ITEMS
 
         try:
