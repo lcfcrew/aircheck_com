@@ -2,6 +2,8 @@ import os
 import tweepy
 from geopy import geocoders
 
+from . import _DEFAULT_MAX_ITEMS
+
 
 _CONSUMER_TOKEN = os.environ.get('TWITTER_API_CONSUMER_TOKEN', '')
 _CONSUMER_SECRET = os.environ.get('TWITTER_API_CONSUMER_SECRET', '')
@@ -13,7 +15,11 @@ _BING_API_KEY = os.environ.get('BING_API_KEY', '')
 def _get_lat_long(tweet):
     geolocator = geocoders.Bing(_BING_API_KEY)
     location = None
+    print(tweet.id_str)
+    print(tweet.user.screen_name)
+    print(tweet.text)
     if tweet.coordinates:
+        print('Tweet coordinates: %s' % tweet.coordinates)
         return tweet.coordinates
     elif tweet.place:
         print('Tweet place: %s' % tweet.place)
@@ -38,11 +44,12 @@ class TwitterAPI(object):
         self.query = query
         self._api = tweepy.API(auth)
 
-    def retrieve(self, max_items=100):
-        cursor = tweepy.Cursor(self._api.search, q=self.query).items(max_items)
+    def retrieve(self, max_items=_DEFAULT_MAX_ITEMS):
+        cursor = tweepy.Cursor(
+            self._api.search, q=self.query).items(max_items)
         return [self._serialize_tweet(t) for t in cursor]
 
-    def retrieve_new(self, tweet_id, max_items=100):
+    def retrieve_new(self, tweet_id, max_items=_DEFAULT_MAX_ITEMS):
         cursor = tweepy.Cursor(
             self._api.search, q=self.query, since_id=tweet_id).items(max_items)
         return [self._serialize_tweet(t) for t in cursor]
@@ -54,6 +61,7 @@ class TwitterAPI(object):
             'created': tweet.created_at,
             'text': tweet.text,
             'tweet_id': tweet.id_str,
+            'twitter_user_id': tweet.user.id_str,
             'twitter_user': tweet.user.screen_name,
             'latitude': latitude,
             'longitude': longitude,
