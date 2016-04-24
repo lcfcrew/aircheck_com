@@ -10,9 +10,7 @@ from rest_framework.parsers import JSONParser
 from . import models
 from . import twitter
 from . import azure
-
-
-_DEFAULT_MAX_ITEMS = 100
+from . import _DEFAULT_MAX_ITEMS
 
 
 def get_ip(request):

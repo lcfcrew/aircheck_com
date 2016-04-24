@@ -20,6 +20,7 @@ class Sentiment(models.Model):
     # Twitter data
     is_tweet = models.BooleanField(default=False) # TODO: require other fields
     tweet_id = models.CharField(max_length=128, null=True, blank=True)
+    twitter_user_id = models.CharField(max_length=64, null=True, blank=True)
     twitter_user = models.CharField(max_length=128, null=True, blank=True)
 
     # Azure analysis
@@ -46,6 +47,7 @@ class SentimentSerializer(serializers.Serializer):
     # Twitter
     is_tweet = serializers.BooleanField(default=False)
     tweet_id = serializers.CharField(required=False)
+    twitter_user_id = serializers.CharField(required=False)
     twitter_user = serializers.CharField(required=False)
 
     # Azure
