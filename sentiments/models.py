@@ -23,9 +23,7 @@ class Sentiment(models.Model):
     twitter_user = models.CharField(max_length=128, null=True, blank=True)
 
     # Azure analysis
-    language = models.CharField(max_length=64, null=True, blank=True)
-    language_iso = models.CharField(max_length=2, null=True, blank=True)
-    language_score = models.FloatField(null=True, blank=True)
+    language = models.CharField(max_length=2, null=True, blank=True)
     sentiment = models.FloatField(null=True, blank=True)
 
     class Meta(object):
@@ -52,8 +50,6 @@ class SentimentSerializer(serializers.Serializer):
 
     # Azure
     language = serializers.CharField(required=False)
-    language_iso = serializers.CharField(required=False)
-    language_score = serializers.FloatField(required=False)
     sentiment = serializers.FloatField(required=False)
 
     def create(self, validated_data):
