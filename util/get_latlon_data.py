@@ -7,6 +7,7 @@ import colorsys
 import datetime
 from datetime import timedelta
 import numpy as np
+import aqi
 
 min_lat = -90.0
 max_lat = 90.0
@@ -14,6 +15,12 @@ min_lon = -180.0
 max_lon = 180.0
 height = 256
 width = 256
+
+def get_aqi(dust,so2,co):
+    query = [(aqi.POLLUTANT_CO_8H,co),
+             (aqi.POLLUTANT_PM25,dust),
+             (aqi.POLLUTANT_SO2_1H,so2)]
+    return aqi.to_aqi(query)
 
 def HSVColor(img):
     if isinstance(img,Image.Image):
