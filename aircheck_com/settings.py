@@ -152,6 +152,7 @@ INSTALLED_APPS += (
     'accounts',
     'pages',
     'sensors',
+    'sentiments',
 )
 
 ADMINS = (
