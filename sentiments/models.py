@@ -7,7 +7,7 @@ class Sentiment(models.Model):
     A statement of health.
     """
 
-    date = models.DateTimeField()
+    created = models.DateTimeField()
     text = models.CharField(max_length=256)
     latitude = models.DecimalField(
         max_digits=15, decimal_places=12, null=True, blank=True)
@@ -19,17 +19,16 @@ class Sentiment(models.Model):
 
     # Twitter data
     is_tweet = models.BooleanField(default=False) # TODO: require other fields
-    twitter_id = models.CharField(max_length=128, null=True, blank=True)
-    twitter_name = models.CharField(max_length=128, null=True, blank=True)
+    tweet_id = models.CharField(max_length=128, null=True, blank=True)
+    twitter_user_id = models.CharField(max_length=64, null=True, blank=True)
+    twitter_user = models.CharField(max_length=128, null=True, blank=True)
 
     # Azure analysis
-    language = models.CharField(max_length=64, null=True, blank=True)
-    language_iso = models.CharField(max_length=2, null=True, blank=True)
-    language_score = models.FloatField(null=True, blank=True)
+    language = models.CharField(max_length=2, null=True, blank=True)
     sentiment = models.FloatField(null=True, blank=True)
 
     class Meta(object):
-        ordering = ('date',)
+        ordering = ('created',)
 
 
 class SentimentSerializer(serializers.Serializer):
@@ -37,7 +36,7 @@ class SentimentSerializer(serializers.Serializer):
     A serializer for :class:`~Sentiment`
     """
     # General
-    date = serializers.DateTimeField(required=False)
+    created = serializers.DateTimeField(required=False)
     text = serializers.CharField()
     latitude = serializers.FloatField(required=False)
     longitude = serializers.FloatField(required=False)
@@ -46,22 +45,28 @@ class SentimentSerializer(serializers.Serializer):
     ip_address = serializers.IPAddressField(required=False)
 
     # Twitter
-    is_tweet = serializers.BooleanField(default=True)
-    twitter_id = serializers.CharField(required=False)
-    twitter_name = serializers.CharField(required=False)
+    is_tweet = serializers.BooleanField(default=False)
+    tweet_id = serializers.CharField(required=False)
+    twitter_user_id = serializers.CharField(required=False)
+    twitter_user = serializers.CharField(required=False)
 
     # Azure
     language = serializers.CharField(required=False)
-    language_iso = serializers.CharField(required=False)
-    language_score = serializers.FloatField(required=False)
     sentiment = serializers.FloatField(required=False)
 
     def create(self, validated_data):
         return Sentiment.objects.create(**validated_data)
 
 
-# class KeyPhrases(models.Model):
-#     """
-#     A list of key phrases associated with a registered Sentiment.
-#     """
-#     sentiment = models.ForeignKey(Sentiment, on_delete=models.CASCADE)
+class KeyPhrase(models.Model):
+    """
+    A list of key phrases associated with a registered Sentiment.
+    """
+    sentiment = models.ForeignKey(Sentiment, on_delete=models.CASCADE)
+    phrase = models.CharField(max_length=128)
+
+
+class KeyPhraseSerializer(serializers.Serializer):
+    sentiment = serializers.PrimaryKeyRelatedField(
+        queryset=Sentiment.objects.all())
+    phrase = serializers.CharField()

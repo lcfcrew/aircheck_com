@@ -1,34 +1,23 @@
-import requests
-
-import os
-
-import h5py as hdf
-
-from django.conf import settings
-
 from .models import DiscretizedDataPoint
 
-response = requests.get('http://map1.vis.earthdata.nasa.gov/wmts-webmerc/MLS_N2O_46hPa_Day/default/2014-04-09/GoogleMapsCompatible_Level6/1/1/1.png')
-'''
-for nasa_data_file in nasa_data_files:
-    file_path = os.path.join(settings.PROJECT_ROOT + settings.MEDIA_URL, nasa_data_file.hdf.name)
-    infile = hdf.File(file_path, "r")
+from util.get_latlon_data import get_last_12d
 
-    print(infile['HDFEOS'].keys())
+data_points = get_last_12d('MLS_CO_215hPa_Day')
+for data_point in data_points:
+    dp = DiscretizedDataPoint(type='CO', latitude=data_point[0], longitude=data_point[1], value=float(data_point[2]) * 250./256.)
+    dp.save()
 
-    #print(infile.keys())
+data_points = get_last_12d('MLS_SO2_147hPa_Day')
+for data_point in data_points:
+    dp = DiscretizedDataPoint(type='SO2', latitude=data_point[0], longitude=data_point[1], value=20. + float(data_point[2]) * 180./256.)
+    dp.save()
 
-    for key in infile['HDFEOS'].keys():
-        print(key)
-        print('===')
-        for key2 in infile['HDFEOS'][key].keys():
-            print(key2)
-            print('---')
-            for key3 in infile['HDFEOS'][key][key2].keys():
-                print(key3)
+data_points = get_last_12d('AIRS_Dust_Score')
+for data_point in data_points:
+    dp = DiscretizedDataPoint(type='Dust', latitude=data_point[0], longitude=data_point[1], value=360. + float(data_point[2]) * 140./256.)
+    dp.save()
 
-    #for name in infile:
-    #    print(name)
-
-    break
-'''
+data_points = get_last_12d('MLS_O3_46hPa_Day')
+for data_point in data_points:
+    dp = DiscretizedDataPoint(type='O3', latitude=data_point[0], longitude=data_point[1], value=0.5 + float(data_point[2]) * 4./256.)
+    dp.save()

@@ -53,6 +53,7 @@ class AzureAPI(object):
         return self._post('sentiment', data)
 
     def _post(self, service, data):
+        print(self._headers)
         uri = self._API_URI + service
         response = requests.post(uri, json=data, headers=self._headers)
         return json.loads(response.text)
