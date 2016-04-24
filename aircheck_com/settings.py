@@ -153,6 +153,7 @@ INSTALLED_APPS += (
     'nasa',
     'pages',
     'sensors',
+    'sentiments',
 )
 
 ADMINS = (
