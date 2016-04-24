@@ -21,9 +21,9 @@ def _get_lat_long(tweet):
     elif tweet.place:
         print('Tweet place: %s' % tweet.place)
         location = geolocator.geocode(tweet.place.full_name)
-    elif tweet.user.location:
-        print('User location: %s' % tweet.user.location)
-        location = geolocator.geocode(tweet.user.location)
+    elif tweet.user.location.encode('ascii', 'ignore'):
+        print('User location: %s' % tweet.user.location.encode('ascii', 'ignore'))
+        location = geolocator.geocode(tweet.user.location.encode('ascii', 'ignore'))
     if location:
         return location.latitude, location.longitude
     else:
