@@ -2,6 +2,11 @@
 
 var earth;
 
+var aqi_layer;
+var aresol_layer;
+var sulfir_layer;
+var ozone_layer;
+
 function initialize() {
     var options = {
         atmosphere: true,
@@ -16,6 +21,15 @@ function initialize() {
     });
     natural.addTo(earth);
 
+    var d = new Date();
+    var month = d.getMonth() + 1;
+    var day = d.getDay();
+    var year = d.getYear();
+
+    aresol_layer = new L.GIBSLayer('MODIS_Combined_Value_Added_AOD', {
+        date: new Date(year + '/' + month + '/' + day),
+        transparent: true
+    }).addTo(earth);
 
     var options = { bounds: [[35.98245136, -112.26379395],[36.13343831, -112.10998535]],
                     minZoom: 10,

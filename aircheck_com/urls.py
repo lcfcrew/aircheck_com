@@ -21,6 +21,7 @@ import slothauth.urls as slothauth_urls
 import pages.urls as pages_urls
 import sensors.urls as sensors_urls
 import accounts.urls as accounts_urls
+import sentiments.urls as sentiments_urls
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
@@ -28,6 +29,7 @@ urlpatterns = [
     url(r'^', include(sensors_urls)),
     url(r'^', include(accounts_urls)),
     url(r'^', include(slothauth_urls)),
+    url(r'^', include(sentiments_urls)),
 ]
 
 urlpatterns += [
