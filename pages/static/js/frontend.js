@@ -17,6 +17,25 @@ function initialize() {
     natural.addTo(earth);
 
 
+    var options = { bounds: [[35.98245136, -112.26379395],[36.13343831, -112.10998535]],
+                    minZoom: 10,
+                    maxZoom: 16 };
+    var grandcanyon = WE.tileLayer('http://tileserver.maptiler.com/grandcanyon/{z}/{x}/{y}.png', options);
+    grandcanyon.addTo(earth);
+
+    var layer = new L.GIBSLayer('MODIS_Aqua_SurfaceReflectance_Bands721', {
+        date: new Date('2015/04/01'),
+        transparent: true
+    }).addTo(earth);
+
+
+//    var test = new L.GIBSLayer('MODIS_Aqua_SurfaceReflectance_Bands721', {
+//    date: new Date('2015/04/01'),
+//    transparent: true
+//    }).addTo(earth);
+
+
+
     // Start a simple rotation animation
     var before = null;
     requestAnimationFrame(function animate(now) {
