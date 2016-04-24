@@ -56,6 +56,6 @@ class DiscretizedDataPointViewSet(viewsets.ModelViewSet):
             dp_so2 = 0
         #dp_dust = DiscretizedDataPoint.objects.filter(type='Dust', longitude__gte=longitude, latitude__gte=latitude)[0]
 
-        response = { 'aqi': get_aqi(dp_so2, dp_co) }
+        response = {'aqi': get_aqi(dp_so2 / 100., dp_co / 100.)}
 
         return Response(response)
