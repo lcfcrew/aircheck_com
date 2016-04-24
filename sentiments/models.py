@@ -60,8 +60,12 @@ class SentimentSerializer(serializers.Serializer):
         return Sentiment.objects.create(**validated_data)
 
 
-# class KeyPhrases(models.Model):
-#     """
-#     A list of key phrases associated with a registered Sentiment.
-#     """
-#     sentiment = models.ForeignKey(Sentiment, on_delete=models.CASCADE)
+class KeyPhrase(models.Model):
+    """
+    A list of key phrases associated with a registered Sentiment.
+    """
+    sentiment = models.ForeignKey(Sentiment, on_delete=models.CASCADE)
+
+
+class KeyPhraseSerializer(serializers.Serializer):
+    sentiment = serializers.ListField()

@@ -12,7 +12,7 @@ from . import twitter
 from . import azure
 
 
-_DEFAULT_MAX_ITEMS = 1000
+_DEFAULT_MAX_ITEMS = 100
 
 
 def get_ip(request):
@@ -105,20 +105,22 @@ def new_tweets(request):
 
         # Sentiment analysis
         sentiments = azure_api.sentiment(azure_data)
+        print(sentiments)
         for idx, tweet in enumerate(sentiments['documents']):
             tweets[idx]['sentiment'] = tweet['score']
 
         # Key phrases
-        key_phrases = azure_api.key_phrases(azure_data)
-        for idx, tweet in enumerate(key_phrases['documents']):
-            tweets[idx]['key_phrases'] = tweet['keyPhrases']
+        # key_phrases = azure_api.key_phrases(azure_data)
+        # for idx, tweet in enumerate(key_phrases['documents']):
+        #     tweets[idx]['key_phrases'] = tweet['keyPhrases']
 
         # Serialize
-        serializer = models.SentimentSerializer(tweets, many=True)
-        if serializer.is_valid():
-            data = serializer.data
-            for tweet in serializer.data:
-                tweet.save()
-            return JSONResponse(data)
+        serializer = models.SentimentSerializer()
+        for tweet_data in tweets:
+            tweet = serializer.create(tweet_data)
+            tweet.is_tweet = True
+            tweet.save()
+
+        return JSONResponse(tweets)
 
     return JSONResponse([], status=400)

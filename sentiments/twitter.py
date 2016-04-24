@@ -15,8 +15,7 @@ class TwitterAPI(object):
                  consumer_secret=_CONSUMER_SECRET,
                  access_token=_ACCESS_TOKEN,
                  access_secret=_ACCESS_SECRET):
-        auth = tweepy.OAuthHandler(consumer_token, consumer_secret)
-        auth.set_access_token(access_token, access_secret)
+        auth = tweepy.AppAuthHandler(consumer_token, consumer_secret)
         self.query = query
         self._api = tweepy.API(auth)
 
