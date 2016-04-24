@@ -4,7 +4,7 @@ from util.get_latlon_data import get_last_12d
 
 data_points = get_last_12d('MLS_CO_215hPa_Day')
 for data_point in data_points:
-    dp = DiscretizedDataPoint(type='CO2', latitude=data_point[0], longitude=data_point[1], value=float(data_point[2]) * 250./256.)
+    dp = DiscretizedDataPoint(type='CO', latitude=data_point[0], longitude=data_point[1], value=float(data_point[2]) * 250./256.)
     dp.save()
 
 data_points = get_last_12d('MLS_SO2_147hPa_Day')
