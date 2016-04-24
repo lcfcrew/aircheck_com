@@ -24,7 +24,7 @@ class Sentiment(models.Model):
     twitter_user = models.CharField(max_length=128, null=True, blank=True)
 
     # Azure analysis
-    language = models.CharField(max_length=2, null=True, blank=True)
+    language = models.CharField(max_length=200, null=True, blank=True)
     sentiment = models.FloatField(null=True, blank=True)
 
     class Meta(object):
