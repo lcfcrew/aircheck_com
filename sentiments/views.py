@@ -37,7 +37,7 @@ class JSONResponse(HttpResponse):
 
 
 @csrf_exempt
-def sentiment_endpoint(request):
+def sentiments(request):
     """
     List all sentiments or create a new one.
     """
@@ -53,8 +53,32 @@ def sentiment_endpoint(request):
         return JSONResponse(serializer.errors, status=400)
 
     elif request.method == 'GET':
-        max_items = request.GET.get('max_items') or _DEFAULT_MAX_ITEMS
+        max_items = request.GET.get('max_items') or 100
+        do_analyze = request.GET.get('analyze') or False
+
         sentiments = models.Sentiment.objects.all()[:max_items]
+
+        if do_analyze and sentiments:
+            azure_api = azure.AzureAPI()
+            azure_data = {
+                'documents': [{'id': s.id, 'text': s.text} for s in sentiments]
+            }
+            sentiment_scores = azure_api.sentiment(azure_data)
+            key_phrases = azure_api.key_phrases(azure_data)
+
+            for idx, sentiment in enumerate(sentiments):
+                sentiment_score = sentiment_scores['documents'][idx]['score']
+                key_phrase_list = key_phrases['documents'][idx]['keyPhrases']
+
+                sentiment.is_tweet = True
+                sentiment.sentiment = sentiment_score
+                sentiment.save()
+
+                for phrase in key_phrase_list:
+                    phrase_obj = models.KeyPhrase.objects.create(
+                        sentiment=sentiment, phrase=phrase)
+                    phrase_obj.save()
+
         serializer = models.SentimentSerializer(sentiments, many=True)
         return JSONResponse(serializer.data)
 
@@ -74,7 +98,6 @@ def tweets(request):
             return JSONResponse(serializer.data)
         except ObjectDoesNotExist:
             return JSONResponse([])
-
     return JSONResponse([], status=400)
 
 
@@ -85,7 +108,6 @@ def new_tweets(request):
     """
 
     twitter_api = twitter.TwitterAPI("air quality")
-    azure_api = azure.AzureAPI()
 
     if request.method == 'GET':
         max_items = request.GET.get('max_items') or _DEFAULT_MAX_ITEMS
@@ -97,34 +119,18 @@ def new_tweets(request):
         except ObjectDoesNotExist:
             tweets = twitter_api.retrieve(max_items)
 
-        azure_data = {
-            'documents': [{'id': t['tweet_id'], 'text': t['text']} for t in tweets]
-        }
-
-        # Analyze
-        sentiments = azure_api.sentiment(azure_data)
-        key_phrases = azure_api.key_phrases(azure_data)
-
         # Serialize
-        serializer = models.SentimentSerializer()
+        deserializer = models.SentimentSerializer()
 
+        tweet_objs = []
         for idx, tweet_data in enumerate(tweets):
-            sentiment_score = sentiments['documents'][idx]['score']
-            key_phrase_list = key_phrases['documents'][idx]['keyPhrases']
-
-            tweet = serializer.create(tweet_data)
+            tweet = deserializer.create(tweet_data)
             tweet.is_tweet = True
-            tweet.sentiment = sentiment_score
             tweet.save()
+            tweet_objs.append(tweet)
 
-            for phrase in key_phrase_list:
-                phrase_obj = models.KeyPhrase.objects.create(
-                    sentiment=tweet, phrase=phrase)
-                phrase_obj.save()
+        serialized = models.SentimentSerializer(tweet_objs, many=True)
 
-            tweets[idx]['sentiment'] = sentiment_score
-            tweets[idx]['key_phrases'] = key_phrase_list
-
-        return JSONResponse(tweets)
+        return JSONResponse(serialized.data)
 
     return JSONResponse([], status=400)
