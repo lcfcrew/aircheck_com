@@ -36,8 +36,31 @@ class JSONResponse(HttpResponse):
         super(JSONResponse, self).__init__(content, **kwargs)
 
 
+def _do_analysis():
+    sentiments = models.Sentiment.objects.filter(sentiment__isnull=True)
+    azure_api = azure.AzureAPI()
+    azure_data = {
+        'documents': [{'id': s.id, 'text': s.text} for s in sentiments]
+    }
+    sentiment_scores = azure_api.sentiment(azure_data)
+    key_phrases = azure_api.key_phrases(azure_data)
+
+    for idx, sentiment in enumerate(sentiments):
+        sentiment_score = sentiment_scores['documents'][idx]['score']
+        key_phrase_list = key_phrases['documents'][idx]['keyPhrases']
+
+        sentiment.is_tweet = True
+        sentiment.sentiment = sentiment_score
+        sentiment.save()
+
+        for phrase in key_phrase_list:
+            phrase_obj = models.KeyPhrase.objects.create(
+                sentiment=sentiment, phrase=phrase)
+            phrase_obj.save()
+
+
 @csrf_exempt
-def sentiments(request):
+def sentiments_endpoint(request):
     """
     List all sentiments or create a new one.
     """
@@ -56,29 +79,10 @@ def sentiments(request):
         max_items = request.GET.get('max_items') or 100
         do_analyze = request.GET.get('analyze') or False
 
-        sentiments = models.Sentiment.objects.all()[:max_items]
+        if do_analyze:
+            _do_analysis()
 
-        if do_analyze and sentiments:
-            azure_api = azure.AzureAPI()
-            azure_data = {
-                'documents': [{'id': s.id, 'text': s.text} for s in sentiments]
-            }
-            sentiment_scores = azure_api.sentiment(azure_data)
-            key_phrases = azure_api.key_phrases(azure_data)
-
-            for idx, sentiment in enumerate(sentiments):
-                sentiment_score = sentiment_scores['documents'][idx]['score']
-                key_phrase_list = key_phrases['documents'][idx]['keyPhrases']
-
-                sentiment.is_tweet = True
-                sentiment.sentiment = sentiment_score
-                sentiment.save()
-
-                for phrase in key_phrase_list:
-                    phrase_obj = models.KeyPhrase.objects.create(
-                        sentiment=sentiment, phrase=phrase)
-                    phrase_obj.save()
-
+        sentiments = models.Sentiment.objects.filter(latitude__isnull=False)[:max_items]
         serializer = models.SentimentSerializer(sentiments, many=True)
         return JSONResponse(serializer.data)
 
