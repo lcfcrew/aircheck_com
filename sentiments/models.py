@@ -18,8 +18,9 @@ class Sentiment(models.Model):
     ip_address = models.GenericIPAddressField(null=True, blank=True)
 
     # Twitter data
-    twitter_id = models.CharField(null=True, blank=True)
-    twitter_name = models.CharField(null=True, blank=True)
+    is_tweet = models.BooleanField(default=False) # TODO: require other fields
+    twitter_id = models.CharField(max_length=128, null=True, blank=True)
+    twitter_name = models.CharField(max_length=128, null=True, blank=True)
 
     # Azure analysis
     language = models.CharField(max_length=64, null=True, blank=True)
@@ -36,30 +37,31 @@ class SentimentSerializer(serializers.Serializer):
     A serializer for :class:`~Sentiment`
     """
     # General
-    date = serializers.DateTimeField()
+    date = serializers.DateTimeField(required=False)
     text = serializers.CharField()
-    latitude = serializers.FloatField()
-    longitude = serializers.FloatField()
+    latitude = serializers.FloatField(required=False)
+    longitude = serializers.FloatField(required=False)
 
     # Organic
-    ip_address = serializers.IPAddressField()
+    ip_address = serializers.IPAddressField(required=False)
 
     # Twitter
-    twitter_id = serializers.CharField()
-    twitter_name = serializers.CharField()
+    is_tweet = serializers.BooleanField(default=True)
+    twitter_id = serializers.CharField(required=False)
+    twitter_name = serializers.CharField(required=False)
 
     # Azure
-    language = serializers.CharField()
-    language_iso = serializers.CharField()
-    language_score = serializers.FloatField()
-    sentiment = serializers.FloatField()
+    language = serializers.CharField(required=False)
+    language_iso = serializers.CharField(required=False)
+    language_score = serializers.FloatField(required=False)
+    sentiment = serializers.FloatField(required=False)
 
     def create(self, validated_data):
         return Sentiment.objects.create(**validated_data)
 
 
-class KeyPhrases(models.Model):
-    """
-    A list of key phrases associated with a registered Sentiment.
-    """
-    sentiment = models.ForeignKey(Sentiment, on_delete=models.CASCADE)
+# class KeyPhrases(models.Model):
+#     """
+#     A list of key phrases associated with a registered Sentiment.
+#     """
+#     sentiment = models.ForeignKey(Sentiment, on_delete=models.CASCADE)
