@@ -30,7 +30,7 @@ TESTING = bool(os.environ.get('TESTING', False))
 
 # Custom Global App Config
 PROJECT_NAME = 'aircheck'
-PROJECT_DOMAIN = 'aircheck.com'
+PROJECT_DOMAIN = 'airchecknasa.com'
 
 APP_ENV = os.environ.get('APP_ENV', '').upper()
 
@@ -103,15 +103,16 @@ if not PRODUCTION:
     }
 else:
     DATABASES = {
-        'default': {  # for South
+        'default': {
             'ENGINE': 'django.db.backends.mysql',
-            'NAME': 'aircheck-db',
-            'USER': 'cdelguercio',
-            'PASSWORD': 'FAkbymFopsE5',
-            'HOST': 'aircheck-db.database.windows.net',
-            'PORT': '1433',
+            'NAME': 'aircheck-mysql',
+            'USER': 'bfee9ded82f84f',
+            'PASSWORD': '2c211575',
+            'HOST': 'us-cdbr-azure-west-c.cloudapp.net',
+            'PORT': '3306',
         }
     }
+
 
 
 # Password validation
