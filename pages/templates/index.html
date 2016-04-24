@@ -8,8 +8,8 @@
     <script src="/static/js/v2/api.js"></script>
     <script src="/static/js/frontend.js"></script>
     <script src="/static/js/rest.js"></script>
-    <script src="/static/js/gibs/GIBSMetadata.js"></script>
-    <script src="/static/js/gibs/GIBSLayer.js"></script>
+    <!--<script src="/static/js/gibs/GIBSMetadata.js"></script>-->
+    <!--<script src="/static/js/gibs/GIBSLayer.js"></script>-->
 
     <!--<style>-->
     <!--html, body{padding: 0; margin: 0;}-->
@@ -36,7 +36,7 @@
             </div>
 
             <div class="input-group input-group-lg ns-block">
-                <input onsubmit="submitTweet" type="text" id='input_location' class="form-control"
+                <input onclick="addNasaMarker('my title', 'my message', '34', '-118')" type="text" id='input_location' class="form-control"
                        placeholder="Check Other Locations"
                        aria-describedby="sizing-addon1">
                 <span class="input-group-addon btn btn-default" id="sizing-addon2"
@@ -48,12 +48,14 @@
 
             <div class="btn-group-vertical btn-group-lg ns-block">
                 <button type="button" class="btn btn-primary"
-                        onclick="addNasaMarker('my title', 'my message', '34', '-118')">Air Quality
-                    Index
+                        onclick="mapOzone()">Ozone
                 </button>
-                <button type="button" class="btn btn-primary">Sulfur Dioxide Rating</button>
-                <button type="button" class="btn btn-primary">Some other overlay</button>
-                <button type="button" class="btn btn-primary">Some other overlay</button>
+                <button type="button" class="btn btn-primary"
+                        onclick="mapCarbonMonoxide()">Carbon Monoxide</button>
+                <button type="button" class="btn btn-primary"
+                        onclick="mapSulfurDioxide()">Sulfur Dioxide</button>
+                <button type="button" class="btn btn-primary"
+                        onclick="mapDustScore()">Dust</button>
             </div>
         </div>
         <div class="col-md-9 col-md-offset-6 no-float">

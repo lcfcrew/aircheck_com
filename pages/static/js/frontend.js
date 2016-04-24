@@ -1,53 +1,28 @@
 
 
 var earth;
+var dates = ['2016-04-12', '2016-04-13','2016-04-14','2016-04-15','2016-04-16','2016-04-17','2016-04-18','2016-04-19','2016-04-20', '2016-04-21', '2016-04-22'];
 
-var aqi_layer;
-var aresol_layer;
-var sulfir_layer;
-var ozone_layer;
+
+//var aqi_layer;
+//var aresol_layer;
+//var sulfir_layer;
+//var ozone_layer;
 
 function initialize() {
     var options = {
         atmosphere: true,
         center: [0, 0],
         zoom: 4,
-        zooming: false,
+        zooming: true,
     };
     earth = new WE.map('earth_div', options);
     var natural = WE.tileLayer('/static/img/webgl/{z}/{x}/{y}.jpg', {
         tileSize: 256,
+        maxZoom: 3,
         tms: true
     });
     natural.addTo(earth);
-
-    var d = new Date();
-    var month = d.getMonth() + 1;
-    var day = d.getDay();
-    var year = d.getYear();
-
-    aresol_layer = new L.GIBSLayer('MODIS_Combined_Value_Added_AOD', {
-        date: new Date(year + '/' + month + '/' + day),
-        transparent: true
-    }).addTo(earth);
-
-    var options = { bounds: [[35.98245136, -112.26379395],[36.13343831, -112.10998535]],
-                    minZoom: 10,
-                    maxZoom: 16 };
-    var grandcanyon = WE.tileLayer('http://tileserver.maptiler.com/grandcanyon/{z}/{x}/{y}.png', options);
-    grandcanyon.addTo(earth);
-
-    var layer = new L.GIBSLayer('MODIS_Aqua_SurfaceReflectance_Bands721', {
-        date: new Date('2015/04/01'),
-        transparent: true
-    }).addTo(earth);
-
-
-//    var test = new L.GIBSLayer('MODIS_Aqua_SurfaceReflectance_Bands721', {
-//    date: new Date('2015/04/01'),
-//    transparent: true
-//    }).addTo(earth);
-
 
 
     // Start a simple rotation animation
@@ -60,6 +35,75 @@ function initialize() {
         requestAnimationFrame(animate);
     });
 }
+
+function mapCarbonMonoxide()
+{
+    for (i = 0; i < 10; i++) {
+        var date = dates[i];
+        var test = WE.tileLayer('http://map1.vis.earthdata.nasa.gov/wmts-webmerc/MLS_CO_215hPa_Day/default/' + date + '/GoogleMapsCompatible_Level6/{z}/{y}/{x}.png', {
+            tileSize: 256,
+            tms: false,
+            maxZoom: 1,
+            opacity: .3
+         });
+        test.addTo(earth);
+    }
+}
+
+function mapSulfurDioxide()
+{
+    for (i = 0; i < 5; i++) {
+        var date = dates[i];
+        var test = WE.tileLayer('http://map1.vis.earthdata.nasa.gov/wmts-webmerc/MLS_SO2_147hPa_Day/default/' + date + '/GoogleMapsCompatible_Level6/{z}/{y}/{x}.png', {
+            tileSize: 256,
+            tms: false,
+            maxZoom: 1,
+            opacity: .3
+         });
+        test.addTo(earth);
+    }
+}
+
+function mapDustScore()
+{
+    for (i = 0; i < 5; i++) {
+        var date = dates[i];
+        var test = WE.tileLayer('http://map1.vis.earthdata.nasa.gov/wmts-webmerc/AIRS_Dust_Score/default/' + date + '/GoogleMapsCompatible_Level6/{z}/{y}/{x}.png', {
+            tileSize: 256,
+            tms: false,
+            maxZoom: 1,
+            opacity: .3
+         });
+        test.addTo(earth);
+    }
+}
+
+function mapOzone()
+{
+    for (i = 0; i < 10; i++) {
+        var date = dates[i];
+        var test = WE.tileLayer('http://map1.vis.earthdata.nasa.gov/wmts-webmerc/MLS_O3_46hPa_Day/default/' + date + '/GoogleMapsCompatible_Level6/{z}/{y}/{x}.png', {
+            tileSize: 256,
+            tms: false,
+            maxZoom: 1,
+            opacity: .3
+         });
+        test.addTo(earth);
+    }
+}
+
+//
+//
+///default/{Time}/{TileMatrixSet}/{TileMatrix}/{TileRow}/{TileCol}.png
+//
+//http://map1.vis.earthdata.nasa.gov/wmts-webmerc/AIRS_Dust_Score/default/{Time}/{TileMatrixSet}/{TileMatrix}/{TileRow}/{TileCol}.png"
+//
+//http://map1.vis.earthdata.nasa.gov/wmts-webmerc/MLS_O3_46hPa_Day/default/{Time}/{TileMatrixSet}/{TileMatrix}/{TileRow}/{TileCol}.png"
+//
+
+
+
+
 
 function addNasaMarker( title,  message,  lat,  long)
 {
