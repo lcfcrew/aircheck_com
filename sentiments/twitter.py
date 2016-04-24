@@ -15,9 +15,6 @@ _BING_API_KEY = os.environ.get('BING_API_KEY', '')
 def _get_lat_long(tweet):
     geolocator = geocoders.Bing(_BING_API_KEY)
     location = None
-    print(tweet.id_str)
-    print(tweet.user.screen_name)
-    print(tweet.text)
     if tweet.coordinates:
         print('Tweet coordinates: %s' % tweet.coordinates)
         return tweet.coordinates
@@ -59,7 +56,7 @@ class TwitterAPI(object):
         latitude, longitude = _get_lat_long(tweet)
         return {
             'created': tweet.created_at,
-            'text': tweet.text,
+            'text': tweet.text.encode('ascii', 'ignore'),
             'tweet_id': tweet.id_str,
             'twitter_user_id': tweet.user.id_str,
             'twitter_user': tweet.user.screen_name,
