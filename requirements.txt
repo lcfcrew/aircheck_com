@@ -23,3 +23,7 @@ factory_boy==2.6.1
 
 django-extensions==1.6.1
 Werkzeug==0.11.4
+
+# Sentiments
+
+tweepy
