@@ -1,3 +1,5 @@
+import datetime
+
 from django.views.decorators.csrf import csrf_exempt
 from django.http import HttpResponse
 from django.core.exceptions import ObjectDoesNotExist
@@ -7,6 +9,7 @@ from rest_framework.parsers import JSONParser
 
 from . import models
 from . import twitter
+from . import azure
 
 
 _DEFAULT_MAX_ITEMS = 25
@@ -44,6 +47,7 @@ def sentiment_endpoint(request):
     if request.method == 'POST':
         data = JSONParser().parse(request)
         data['ip_address'] = get_ip(request)
+        data['date'] = data.get('date') or datetime.datetime.now()
         serializer = models.SentimentSerializer(data=data)
         if serializer.is_valid():
             serializer.save()
@@ -65,6 +69,7 @@ def twitter_endpoint(request):
     Fetch tweets and tweet data.
     """
     twitter_api = twitter.TwitterAPI("#aircheck")
+    azure_api = azure.AzureAPI()
 
     if request.method == 'PUT':
         try:
@@ -73,6 +78,17 @@ def twitter_endpoint(request):
             twitter_results = twitter_api.retrieve_new(tweet_id)
         except ObjectDoesNotExist:
             twitter_results = twitter_api.retrieve()
+
+        new_tweets = []
+
+        azure_data = {
+            'documents': [{'id': k, 'text': v['text']} for
+                          k, v in twitter_results.items()]}
+
+        sentiments = azure_api.sentiment(azure_data)
+        for tweet in sentiments['documents']:
+            tweets[tweet['id']]['sentiment'] = tweet['score']
+
         return JSONResponse(twitter_results)
 
     elif request.method == 'GET':
