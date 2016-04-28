@@ -24,3 +24,5 @@ class Command(BaseCommand):
             tweet = deserializer.create(tweet_data)
             tweet.is_tweet = True
             tweet.save()
+            self.stdout.write(
+                self.style.SUCCESS('%s' % tweet.text))

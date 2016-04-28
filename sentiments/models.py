@@ -62,7 +62,7 @@ class KeyPhrase(models.Model):
     """
     A list of key phrases associated with a registered Sentiment.
     """
-    sentiment = models.ForeignKey(Sentiment, on_delete=models.CASCADE)
+    sentiment = models.ForeignKey(Sentiment, on_delete=models.CASCADE, related_name='key_phrases')
     phrase = models.CharField(max_length=128)
 
 

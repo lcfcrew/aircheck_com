@@ -16,13 +16,13 @@ def _get_lat_long(tweet):
     geolocator = geocoders.Bing(_BING_API_KEY)
     location = None
     if tweet.coordinates:
-        print('Tweet coordinates: %s' % tweet.coordinates)
+        # print('Tweet coordinates: %s' % tweet.coordinates)
         return tweet.coordinates
     elif tweet.place:
-        print('Tweet place: %s' % tweet.place)
+        # print('Tweet place: %s' % tweet.place.full_name)
         location = geolocator.geocode(tweet.place.full_name)
     elif tweet.user.location.encode('ascii', 'ignore'):
-        print('User location: %s' % tweet.user.location.encode('ascii', 'ignore'))
+        # print('User location: %s' % tweet.user.location.encode('ascii', 'ignore'))
         location = geolocator.geocode(tweet.user.location.encode('ascii', 'ignore'))
     if location:
         return location.latitude, location.longitude
